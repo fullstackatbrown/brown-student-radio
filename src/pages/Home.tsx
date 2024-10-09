@@ -1,19 +1,17 @@
 import React from 'react';
-import FirebaseAuth from './components/FirebaseAuth.tsx';
+import HandleGoogleLogin from '../components/HandleGoogleLogin';
 
 const About: React.FC = () => {
-  var firebase = require('firebase');
-  var firebaseui = require('firebaseui');
-  var ui = new firebaseui.auth.AuthUI(firebase.auth());
-  ui.start('#firebaseui-auth-container', {
-    signInOptions: [
-      firebase.auth.EmailAuthProvider.PROVIDER_ID,
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID
-    ],
-    // Other config options...
-  });
   return (
-    <><h1>Home page!</h1><div id="firebaseui-auth-container"></div><div id="loader">Loading...</div></>
+    <div className="flex flex-col justify-center items-center h-screen">
+    <h1 className="text-3xl mb-4">Home page!</h1>
+    <button 
+      className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+      onClick={HandleGoogleLogin}
+    >
+      Login with Google
+    </button>
+  </div>
   );
 };
 
