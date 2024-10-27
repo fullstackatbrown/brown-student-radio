@@ -1,7 +1,16 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import "./About.css"; // Ensure you import the CSS
+import { queryObjects } from "../cosmic";
 
 const About: React.FC = () => {
+  const [eboard, setEboard] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+        setEboard(await queryObjects({type: "eboard-members"}));
+    })();
+}, []);
   return (
     <div className="about-container">
       <div className="about-content">
@@ -51,24 +60,7 @@ const About: React.FC = () => {
       <div className="eboard-container">
         <h2>E-Board 24-25</h2>
         <div className="eboard-members">
-          <div className="eboard-member">
-            <img
-              src="https://static.wixstatic.com/media/39c7bc_e3bceafe816949338ce3f4534be2268c~mv2.jpg/v1/fill/w_1023,h_1260,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/39c7bc_e3bceafe816949338ce3f4534be2268c~mv2.jpg"
-              alt="Hunter"
-            />
-          </div>
-          <div className="eboard-member">
-            <img
-              src="https://static.wixstatic.com/media/39c7bc_d0a4d4ecab304e4fb66ddbcbd5c10aa9~mv2.jpg/v1/fill/w_1033,h_1260,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/39c7bc_d0a4d4ecab304e4fb66ddbcbd5c10aa9~mv2.jpg"
-              alt="April & Xandi"
-            />
-          </div>
-          <div className="eboard-member">
-            <img
-              src="https://static.wixstatic.com/media/39c7bc_acdc945c945d4a109bbf3382b15b7582~mv2.jpg/v1/fill/w_1029,h_1260,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/39c7bc_acdc945c945d4a109bbf3382b15b7582~mv2.jpg"
-              alt="Lucas"
-            />
-          </div>
+          {eboard.map(eboardm => EboardMember({eboard}))}
         </div>
       </div>
 
@@ -90,4 +82,17 @@ const About: React.FC = () => {
   );
 };
 
+
+function EboardMember({ eboard }) {
+  return (
+    <div className="eboard-member">
+    <img
+      src= {eboard.metadata.eboardpicture.url}
+      alt= {eboard.metadata.title}
+    />
+  </div>
+  );
+}
+
 export default About;
+
