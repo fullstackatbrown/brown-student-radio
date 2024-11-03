@@ -1,10 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { createBucketClient } from '@cosmicjs/sdk';
 import "./About.css"; // Ensure you import the CSS
 
+interface Profile {
+    id: string;
+    metadata: {
+        name: string;
+        photo: {
+            url: string;
+        };
+        description: string;
+    };
+}
+
 const About: React.FC = () => {
-  return (
-    <div className="about-container">
-      <div className="about-content">
+    const [profiles, setProfiles] = useState<Profile[]>([]);
+    const COSMIC_BUCKET_SLUG = "project-bsr-tester"; // Use your correct slug
+    const COSMIC_READ_KEY = "DnnzBL44WbCleKDLyW3VPgWkBEExYQBkPhxiJE9OtURcPyk6GG"; // Use your correct read key
+
+    // Create the Cosmic client
+    const cosmic = createBucketClient({
+        bucketSlug: COSMIC_BUCKET_SLUG,
+        readKey: COSMIC_READ_KEY,
+    });
+
+    // Fetch profiles from Cosmic CMS
+    const fetchUserProfiles = async () => {
+        try {
+            const { objects } = await cosmic.objects.find({
+                type: 'user-profiles', // Ensure this matches your object type slug
+            });
+            console.log("Fetched profiles:", objects); // Log the fetched objects
+            setProfiles(objects || []);
+        } catch (error) {
+            console.error("Error fetching profiles:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchUserProfiles();
+    }, []);
+
+    return (
+        <div className="about-container">
+            <div className="about-content">
         <h1>About</h1>
         <p>
           “The Brown Network” began in 1936 as the first student-run radio
@@ -86,8 +125,21 @@ const About: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+      <div className="profilesContainer">
+    {profiles.map((profile) => (
+        <div key={profile.id} className="profile">
+            {profile.metadata.photo && profile.metadata.photo.url ? (
+                <img src={profile.metadata.photo.url} alt={`${profile.metadata.name}'s profile`} />
+            ) : (
+                <img src="path/to/default/image.jpg" alt="Default profile" /> // Optional: provide a default image
+            )}
+            <h3>{profile.metadata.name}</h3>
+            <p>{profile.metadata.description}</p>
+        </div>
+    ))}
+</div>
+        </div>
+    );
 };
 
 export default About;
