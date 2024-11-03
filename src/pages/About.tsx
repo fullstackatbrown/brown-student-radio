@@ -15,6 +15,7 @@ interface Profile {
 
 const About: React.FC = () => {
     const [profiles, setProfiles] = useState<Profile[]>([]);
+    const [eboardMembers, setEboardMembers] = useState<Profile[]>([]);
     const COSMIC_BUCKET_SLUG = "project-bsr-tester"; // Use your correct slug
     const COSMIC_READ_KEY = "DnnzBL44WbCleKDLyW3VPgWkBEExYQBkPhxiJE9OtURcPyk6GG"; // Use your correct read key
 
@@ -37,8 +38,21 @@ const About: React.FC = () => {
         }
     };
 
+    // Fetch e-board members from Cosmic CMS
+    const fetchEboardMembers = async () => {
+      try {
+          const { objects } = await cosmic.objects.find({
+              type: 'e-board-members', 
+          });
+          setEboardMembers(objects || []);
+      } catch (error) {
+          console.error("Error fetching e-board members:", error);
+      }
+    };
+
     useEffect(() => {
         fetchUserProfiles();
+        fetchEboardMembers();
     }, []);
 
     return (
@@ -125,6 +139,7 @@ const About: React.FC = () => {
           </div>
         </div>
       </div>
+      {/* User Profiles Section */}
       <div className="profilesContainer">
     {profiles.map((profile) => (
         <div key={profile.id} className="profile">
@@ -137,8 +152,23 @@ const About: React.FC = () => {
             <p>{profile.metadata.description}</p>
         </div>
     ))}
-</div>
-        </div>
+      </div>
+      {/* E-Board Members Section */}
+      <div className="profilesContainer">
+                <h2>E-Board Members</h2>
+                {eboardMembers.map((member) => (
+                    <div key={member.id} className="profile">
+                        {member.metadata.photo?.url ? (
+                            <img src={member.metadata.photo.url} alt={`${member.metadata.name}'s profile`} />
+                        ) : (
+                            <img src="path/to/default/image.jpg" alt="Default profile" /> 
+                        )}
+                        <h3>{member.metadata.name}</h3>
+                        <p>{member.metadata.description}</p>
+                    </div>
+                ))}
+            </div>
+      </div>
     );
 };
 
