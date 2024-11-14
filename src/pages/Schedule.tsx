@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Player from '../components/Player';
+import BlogPreview from '../components/BlogPreview';
 
 // Main functional component for the Home page
 const Home: React.FC = () => {
@@ -14,6 +15,7 @@ const Home: React.FC = () => {
     return () => {
       document.body.removeChild(script);
     };
+
   }, []); // Empty dependency array means this effect runs once after the first render
 
   return (
@@ -66,16 +68,19 @@ const Home: React.FC = () => {
                 {/* section displaying current on-air show */}
                 <section className="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
                   <div className="mdl-card mdl-cell mdl-cell--12-col">
-                    <div className="mdl-card__supporting-text center">
-                      <h4> <b> Tune in! (Click on the Disc Below to Listen!)</b></h4>
+                    <div className="mdl-card__supporting-text">
+                      <h4> <b> Now Live: </b></h4>
                       {/* spinitron widget for showing the currently playing track */}
                       
-                      <div className="on-air-container shows-box">
+                      <div className="on-air-container">
                         <Player />
                         <div className="program-info">
                           
+                          <b> currently playing </b>
+                          
+                          <div className="on-air-container"> </div>
                           <div data-station="wbru" data-count="1" data-action="upcoming-shows" 
-                              data-image="1" data-description="1" className="spinitron-js-widget"></div>
+                              data-description="1" className="spinitron-js-widget"></div>
                         </div>
                       </div>
   </div>
@@ -103,10 +108,11 @@ const Home: React.FC = () => {
                       {/* link to see the full schedule of upcoming shows */}
                       <a href="https://programs.testradio.org/WBRU/calendar?layout=1" className="mdl-button"
    style={{ position: 'relative', left: '-70px' }}>
-   See more</a>
+   See Full Schedule</a>
                     </div>
                   </div>
                 </section>
+                
               </div>
             </main>
           </div>

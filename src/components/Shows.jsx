@@ -30,14 +30,14 @@ export default function Shows() {
     if (shows) {
         return (
             <>
-                <h3>Shows coming up</h3>
+                <h3>Next Shows</h3>
                 <div className="shows-box" ref={showsBox} onClick={() => setShowsBoxOpen(!showsBoxOpen)}>
                     <table className="shows-table">
                         {shows.map(show => (
                             <tr>
                                 <td>{show[0]}</td>
                                 <td>{show[1]}</td>
-                                <td>{show[2]}</td>
+
                             </tr>
                         ))}
                     </table>
