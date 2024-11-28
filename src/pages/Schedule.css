@@ -1,158 +1,89 @@
-/* Bar at the very top of the page */
-.top-bar {
-    height: 2; /* Same height as the divider */
-    background-color: #000; /* Black color for contrast */
-    margin: 0; /* No margin to remove the space at the top */
+/* General styling for the schedule page */
+.schedule-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
-.schedule-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: transparent;
-    font-size: 1rem;
+/* Main content */
+.main-content {
+  position: relative;
+  z-index: 1;
 }
 
-.header-divider {
-    border: 0;
-    height: 3px; /* Increased height for a bolder line */
-    background-color: #000; /* Darker color for better contrast */
-    margin: 0px 0;
+/* Now playing section styling */
+.now-playing {
+  background-color: #ff5c5c;
+  padding: 20px;
+  color: white;
 }
 
-.under-bar-content {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 10px 20px;
-    height: 70px;
-    color: black
-  }
-
-  .under-bar-content-two {
-    font-size: 18px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: left;
-    padding: 10px 20px;
-  }
-  
-  .under-bar-time,
-  .under-bar-cp{
-    font-size: 1em;
-    color: #555;
-    margin-right: 290px; /* Space between items */
-  }
-
-  .under-bar-cp, 
-  .under-bar-un{
-    font-size: 1em;
-    color: #555;
-    margin-right: 350px; /* Space between items */
-  }
-  
-  .under-bar-cp {
-    margin-left: 40px; /* Moves "CURRENTLY PLAYING" 40px to the left */
-  }
-  
-  .under-bar-un {
-    margin-left: 40px; /* Moves "UP NEXT" 40px to the left */
-  }
-  
-  .widget {
-    position: absolute; /* or relative/fixed as needed */
-    left: 480px; /* Adjust to move it right */
-    top: 300px; /* 250 for widget */ 
-  }
-
-  .other-widget {
-    position: absolute; /* or relative/fixed as needed */
-    left: 1050px; /* Adjust to move it right */
-    top: 300px; 
-  }
-
-  .widget-box {
-    font-family: Arial Narrow, Arial, sans-serif;
-    font-size: 91%;
-    padding: 1em;
-    background: #FFFABC;
-
-    margin: 0;
-    display: flex;
-    flex-direction: column;
+/* The sliding content (Schedule) section */
+.sliding-content {
+  position: fixed; /* Fix it on the screen */
+  top: 0;
+  right: -100%; /* Initially off-screen */
+  width: 100%;
+  height: 100%;
+  background-color: #f7f7f7;
+  transition: right 0.3s ease-in-out; /* Smooth transition */
+  z-index: 2;
+  padding: 20px;
 }
 
-  .schedule-section {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #f4f4f4; /* Example background color */
-    border-radius: 5px;
-    width: 300px; /* Adjust width as needed */
-  }
-  
-  .schedule-section h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .schedule-section ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .schedule-section ul li {
-    margin: 5px 0;
+.sliding-content.show {
+  right: 0; /* Move it to the screen when shown */
+}
+
+/* Schedule section inside the sliding content */
+.schedule {
+  padding: 20px;
+}
+
+/* Styling for the back button */
+.back-button {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.back-button:hover {
+  color: #ff5c5c;
+}
+
+/* Styling for the toggle button */
+.toggle-button {
+  background-color: #ff5c5c;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.toggle-button:hover {
+  background-color: #e04c4c;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .calendar-header,
+  .calendar-grid {
+    grid-template-columns: 60px repeat(7, 1fr); /* Adjust for smaller screens */
   }
 
-  .mdl-card__actions {
-    display: flex; /* Enable flexbox */
-    justify-content: flex-end; /* Align the content (button) to the right */
-    padding: 0; /* Optional: Removes any extra padding if needed */
+  .time-slot {
+    font-size: 0.8rem;
   }
-  
-  .mdl-card__actions .mdl-button {
-    border: 1px solid black; /* Adds a black border */
-    padding: 5px 10px; /* Adds padding inside the button */
-    border-radius: 5px; /* Rounds the corners for a button look */
-    background-color: transparent; /* Makes background transparent */
-    color: black; /* Sets text color */
-    text-align: center; /* Centers the text inside */
-    text-decoration: none; /* Removes underline from the link */
-    transition: background-color 0.3s, color 0.3s; /* Adds a smooth hover transition */
-    margin-bottom: 50px;
-    margin-right: 15px; 
-  }
-  
-  .mdl-card__actions .mdl-button:hover {
-    background-color: black; /* Dark background on hover */
-    color: white; /* White text color on hover */
-  }
-  
-  .home-button {
-    position: fixed; /* Stays in the same place even when scrolling */
-    top: 10px;
-    right: 10px;
-    z-index: 1000; /* Ensures it is above other elements */
-    margin-right: 10px;
-    margin-top: 10px; 
-  }
-  
-  .home-button a {
-    text-decoration: none;
-    color: #000; /* Default color */
-  }
-  
-  .home-button a:hover {
-    color: var(--primary-color); /* Change color on hover */
-  }
-  
-  
-  
-  
 
+  .show-details h3 {
+    font-size: 0.8rem;
+  }
 
-
-
-
-  
+  .show-details p {
+    font-size: 0.7rem;
+  }
+}
